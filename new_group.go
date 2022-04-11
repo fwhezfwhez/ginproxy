@@ -23,7 +23,6 @@ func Group(r gin.IRouter, proxyPassUrl string) (*NewGroup) {
 	}
 }
 
-
 func (ng *NewGroup) httpProxyPass(url string, c *gin.Context) {
 	// 处理url内的param参数
 	handleParam(&url, c)
@@ -85,7 +84,6 @@ func (ng *NewGroup) httpProxyPass(url string, c *gin.Context) {
 	io.Copy(c.Writer, resp.Body)
 }
 
-
 func (ng *NewGroup) SetRespTmpl(errnoFieldName string, errmsgFieldName string) {
 	ng.errnoTmpl = newErrnoTmpl(errnoFieldName, errmsgFieldName)
 }
@@ -109,6 +107,12 @@ func (ng *NewGroup) DELETE(rel string, handlers ... func(c *gin.Context)) {
 }
 func (ng *NewGroup) PATCH(rel string, handlers ... func(c *gin.Context)) {
 	ng.rg.PATCH(rel, func(c *gin.Context) {
+		ng.httpProxyPass(ng.proxyPassUrl+rel, c)
+	})
+}
+
+func (ng *NewGroup) PUT(rel string, handlers ... func(c *gin.Context)) {
+	ng.rg.PUT(rel, func(c *gin.Context) {
 		ng.httpProxyPass(ng.proxyPassUrl+rel, c)
 	})
 }
