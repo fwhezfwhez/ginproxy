@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/fwhezfwhez/ginproxy"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
