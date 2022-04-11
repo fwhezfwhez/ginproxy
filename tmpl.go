@@ -1,4 +1,4 @@
-package util
+package ginproxy
 
 type errnoTmpl struct {
 	ErrnoFiledName  string
